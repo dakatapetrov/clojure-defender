@@ -3,37 +3,39 @@ Clojure Defender
 
 A simple tower defense game in clojure.
 
-> # clojure-defender
+<!--
+# clojure-defender
 
-> FIXME: description
+FIXME: description
 
-> ## Installation
+## Installation
 
-> Download from http://example.com/FIXME.
+Download from http://example.com/FIXME.
 
-> ## Usage
+## Usage
 
-> FIXME: explanation
+FIXME: explanation
 
->     $ java -jar clojure-defender-0.1.0-standalone.jar [args]
+    $ java -jar clojure-defender-0.1.0-standalone.jar [args]
 
-> ## Options
+## Options
 
-> FIXME: listing of options this app accepts.
+FIXME: listing of options this app accepts.
 
-> ## Examples
+## Examples
 
-> ...
+...
 
-> ### Bugs
+### Bugs
 
-> ...
+...
 
-> ### Any Other Sections
-> ### That You Think
-> ### Might be Useful
+### Any Other Sections
+### That You Think
+### Might be Useful
 
-> ## License
+## License
+-->
 
 Copyright © 2013 Yordan Petrov
 
