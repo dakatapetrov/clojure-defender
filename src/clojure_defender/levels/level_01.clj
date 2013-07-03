@@ -5,7 +5,7 @@
 (def paths
   (for [x (range 0 700 30)
         y [100]]
-    {:x x :y y :direction :right}))
+    {:x x :y y :direction [1 0]}))
 
 (def protect-points [{:x 690 :y 100 :capacity 50}])
 
@@ -14,7 +14,9 @@
         y [70 130]]
     {:x x :y y}))
 
-(def generators)
+(def generators
+  [{:x 0 :y 110 :enemies [{:speed 0.1} {:speed 0.3}] :directions [[1 0]]}])
+
 (def buildings)
 (def enemies)
 (def projectiles)
@@ -34,7 +36,11 @@
   (doseq [build-area build-areas]
     (swap! gl/build-areas conj build-area)))
 
-(defn load-generators [])
+(defn load-generators
+  []
+  (doseq [generator generators]
+    (swap! gl/generators conj generator)))
+
 (defn load-buildings [])
 (defn load-enemies [])
 (defn load-projectiles [])
