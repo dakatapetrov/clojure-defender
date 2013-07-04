@@ -56,33 +56,32 @@
 (defn spawn
   []
   (doseq [spawner @gl/spawners]
-    (let [x (:x spawner)
-          y (:y spawner)
-          enemy (rand-nth (:enemies spawner))
-          dir (rand-nth (:directions spawner))
-          dirx (first dir)
-          diry (second dir)]
-      (swap! gl/enemies
-             conj
-             {(ref (conj enemy {:x x :y y})) :on}))))
-
-(defn move
-  []
- (loop []
-   (step)
-   (redisplay gl/main-frame)
-   (Thread/sleep 3))
-   (recur))
+    (let [ac (:active-cooldown spawner)]
+      (when (realized? @ac)
+        (let [x (:x spawner)
+              y (:y spawner)
+              enemy (rand-nth (:enemies spawner))
+              dir (rand-nth (:directions spawner))
+              cooldown (:cooldown spawner)]
+          (swap! gl/enemies
+                 conj
+                 {(ref (conj enemy {:x x :y y})) :on})
+          (reset! ac (future (Thread/sleep cooldown))))))))
 
 (defn respawn
   []
-  (loop []
-    (spawn)
-    (redisplay gl/main-frame)
-    (Thread/sleep 1000)
-    (recur)))
+  (let [cooldown (atom (future (true)))]
+    (if (realized? @cooldown)
+      (do
+        (spawn)
+        (reset! cooldown (future (Thread/sleep 1000)))))))
 
 (defn play
   []
-  (.start (Thread. respawn))
-  (.start (Thread. move)))
+  (loop [painter (atom (future (true)))]
+    (spawn)
+    (step)
+    (when (realized? @painter)
+      (reset! painter (future (redisplay gl/main-frame))))
+    (Thread/sleep 3)
+    (recur painter)))
