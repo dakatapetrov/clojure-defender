@@ -4,7 +4,7 @@
 
 (def paths
   (vec (concat (for [x (range 0 700 30)
-                      y [100]]
+                      y [100 490]]
                   {:x x :y y :direction [1 0]})
                 [{:x 720 :y 100 :direction [0.5 1]}]
                 (for [x [720]
@@ -19,7 +19,10 @@
     {:x x :y y}))
 
 (def spawners
-  [{:x 0 :y 110 :enemies [{:speed 0.1} {:speed 0.3}] :directions [[1 0]]}])
+  [{:x 0 :y 110 :enemies [{:speed 0.1} {:speed 0.3}]
+    :cooldown 1000 :active-cooldown (atom (future (true)))}
+   {:x 0 :y 500 :enemies [{:speed 0.1} {:speed 0.3}]
+    :cooldown 3000 :active-cooldown (atom (future (true)))}])
 
 (def buildings)
 (def enemies)
