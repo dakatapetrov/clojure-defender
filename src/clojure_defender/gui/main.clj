@@ -21,9 +21,9 @@
           y (:y path)]
       (draw g (rect x y gl/path-size) (style :background "#e39e54")))))
 
-(defn draw-protect-points
+(defn draw-defend-points
   [g]
-  (doseq [protect-point @gl/protect-points]
+  (doseq [protect-point @gl/defend-points]
     (let [x (:x protect-point)
           y (:y protect-point)]
       (draw g (rect x y gl/path-size) (style :background :red)))))
@@ -47,7 +47,7 @@
   [c g]
   (draw-play-area g)
   (draw-paths g)
-  (draw-protect-points g)
+  (draw-defend-points g)
   (draw-build-areas g)
   (draw-enemies g))
   ; (draw g (polygon [0 0] [30 0] [30 30] [0 30]) (style :background "#464248"))

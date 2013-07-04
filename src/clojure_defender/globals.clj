@@ -4,9 +4,9 @@
 (use 'seesaw.core)
 
 (def paths (atom []))
-(def protect-points (atom []))
+(def defend-points (atom []))
 (def build-areas (atom []))
-(def generators (atom []))
+(def spawners (atom []))
 (def buildings (atom []))
 (def enemies (atom {}))
 (def projectiles (atom []))
