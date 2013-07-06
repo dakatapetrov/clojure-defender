@@ -6,11 +6,10 @@
 (require '[clojure-defender.globals :as gl])
 (use 'clojure-defender.gui.main)
 (use 'clojure-defender.levels.level-01)
-(use 'clojure-defender.logic.main)
 
 (defn -main
   [& args]
   (load-level)
   (create-gui)
   (redisplay gl/main-frame)
-  (play))
+  (run))

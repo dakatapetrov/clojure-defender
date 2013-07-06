@@ -1,6 +1,5 @@
 (ns clojure-defender.logic.main)
 
-(use 'clojure-defender.gui.main)
 (require '[clojure-defender.globals :as gl])
 (require '[clojure-defender.data.buildings :as db])
 
@@ -157,17 +156,11 @@
 
 (defn play
   []
-  (loop [painter (atom (future (true)))]
-    (when @gl/playing?
-      (cooldown-timer @gl/spawners)
-      (cooldown-timer @gl/buildings)
-      (spawn)
-      (build)
-      (step)
-      (shoot)
-      (move-projectiles)
-      (collisions)
-      (when (realized? @painter)
-        (reset! painter (future (redisplay gl/main-frame)))))
-    (Thread/sleep 3)
-    (recur painter)))
+  (cooldown-timer @gl/spawners)
+  (cooldown-timer @gl/buildings)
+  (spawn)
+  (build)
+  (step)
+  (shoot)
+  (move-projectiles)
+  (collisions))

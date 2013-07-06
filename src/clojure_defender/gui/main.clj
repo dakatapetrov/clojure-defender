@@ -2,9 +2,11 @@
 
 (use 'clojure.repl)
 (use '[seesaw core color graphics behave keymap])
+(require '[seesaw.mouse :as mouse])
 (require '[clojure-defender.globals :as gl])
 (require '[clojure-defender.data.buildings :as db])
 (use 'clojure-defender.levels.level-01)
+(use 'clojure-defender.logic.main)
 
 (defn display [fr content]
   (config! fr :content content)
@@ -103,7 +105,16 @@
           (fn [e] (reset! gl/current-building db/ultimate-tower)))
   (listen (select gl/main-frame [:.world])
           :mouse-clicked
-          (fn [e] (let [x (.getX e)
-                        y (.getY e)]
+          (fn [e] (let [[x y] (mouse/location e)]
                     (dosync
                       (alter gl/click-location conj {:x x :y y}))))))
+
+(defn run
+  []
+  (loop [painter (atom (future (true)))]
+    (when @gl/playing?
+      (play)
+      (when (realized? @painter)
+        (reset! painter (future (redisplay gl/main-frame)))))
+    (Thread/sleep 3)
+    (recur painter)))
