@@ -1,13 +1,6 @@
 (ns clojure-defender.physics.geometry)
+(use 'clojure.contrib.math)
 (require '[clojure-defender.globals :as gl])
-
-(defn exp
-  [x n]
-  (reduce * (repeat n x)))
-
-(defn abs
-  [x]
-  (if (neg? x) (- x) x))
 
 (defn in-rect?
   [x1 y1 x2 y2 w2 h2]
@@ -39,8 +32,8 @@
 
 (defn rect-diagonal-length
   [w h]
-  (+ (exp w 2)
-     (exp h 2)))
+  (sqrt (+ (expt w 2)
+           (expt h 2))))
 
 (defn rect-radius-length
   [w h]
@@ -48,8 +41,8 @@
 
 (defn distance
   [x1 y1 x2 y2]
-  (+ (exp (- x1 x2) 2)
-     (exp (- y1 y2) 2)))
+  (sqrt (+ (expt (- x1 x2) 2)
+           (expt (- y1 y2) 2))))
 
 (defn sphere-colision?
   [x1 y1 r1 x2 y2 r2]
@@ -58,9 +51,9 @@
 
 (defn in-range?
   [x1 y1 x2 y2 r2]
-  (<= (+ (exp (- x2 x1) 2)
-         (exp (- y2 y1) 2))
-      (exp r2 2)))
+  (<= (+ (expt (- x2 x1) 2)
+         (expt (- y2 y1) 2))
+      (expt r2 2)))
 
 (defn on-object
   [x y objects]
