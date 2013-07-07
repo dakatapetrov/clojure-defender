@@ -74,8 +74,9 @@
                                   (button :text "Arcane" :class :arcane-tower)
                                   (button :text "Ultimate" :class :ultimate)])
     :center (canvas :paint draw-world
-              :class :world
-              :background :black)))
+                    :class :world
+                    :background :black
+                    :cursor :hand)))
 
 (defn redisplay [root]
   (dosync
