@@ -15,7 +15,7 @@
 (defn step
   []
   (doseq [enemy @gl/enemies]
-    (move-enemy enemy)))
+    (step-enemy enemy)))
 
 (defn cooldown-timer
   [col]

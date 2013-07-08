@@ -1,9 +1,11 @@
 (ns clojure-defender.logic.enemy)
 
+(use 'clojure-defender.physics.enemy)
+
 (require '[clojure-defender.globals :as gl])
 (use 'clojure-defender.physics.geometry)
 
-(defn move-enemy
+(defn step-enemy
   [enemy]
   (let [{:keys [speed hp x y]} @enemy
         on-path (on-object x y @gl/paths)
@@ -12,7 +14,5 @@
         movex (* speed px)
         movey (* speed py)]
     (if (or (<= hp 0) on-defend-point)
-      (swap! gl/enemies disj enemy)
-      (dosync
-        (alter enemy update-in [:x] #(+ % movex))
-        (alter enemy update-in [:y] #(+ % movey))))))
+      (kill-enemy enemy)
+      (move-enemy enemy movex movey))))
