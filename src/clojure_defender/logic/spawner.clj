@@ -2,14 +2,27 @@
 
 (require '[clojure-defender.globals :as gl])
 
-(defn spawn
-  []
-  (doseq [spawner @gl/spawners]
-    (let [ac (:ac spawner)]
-      (when-not (pos? @ac)
-        (let [{:keys [x y cooldown]} spawner
-              enemy (rand-nth (:enemies spawner))]
-          (swap! gl/enemies
-                 conj
-                 (ref (conj enemy {:x x :y y})))
-          (reset! ac cooldown))))))
+(defn- on-cooldown?
+  [spawner]
+  (let [ac (:ac spawner)]
+    (pos? @ac)))
+
+(defn- reset-cooldown
+  [spawner]
+  (let [{:keys [ac cooldown]} spawner]
+    (reset! ac cooldown)))
+
+(defn- spawn
+  [spawner]
+  (let [{:keys [x y enemies]} spawner
+        enemy (rand-nth enemies)]
+  (swap! gl/enemies
+           conj
+           (ref (conj enemy {:x x :y y})))))
+
+(defn step-spawner
+  [spawner]
+  (when-not (on-cooldown? spawner)
+    (dosync
+      (spawn spawner)
+      (reset-cooldown spawner))))
