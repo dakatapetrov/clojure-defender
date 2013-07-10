@@ -2,15 +2,19 @@
 
 (require '[clojure-defender.data.projectiles :as pj])
 
-(defn make-building
+(defn define-building
   [fire-range cooldown projectiles color]
   {:fire-range fire-range :cooldown cooldown
    :projectiles projectiles :color color})
 
-(def fire-tower (make-building 70 300 [pj/fireball] :orange))
-(def frost-tower (make-building 70 350 [pj/frostball] :blue))
-(def arcane-tower (make-building 65 250 [pj/arcanemissle] :gray))
-(def ultimate-tower (make-building 70
+(defn modify-building
+  [building attributes]
+  (conj building attributes))
+
+(def fire-tower (define-building 70 300 [pj/fireball] :orange))
+(def frost-tower (define-building 70 350 [pj/frostball] :blue))
+(def arcane-tower (define-building 65 250 [pj/arcanemissle] :gray))
+(def ultimate-tower (define-building 70
                                    280
                                    [pj/fireball pj/frostball pj/arcanemissle]
                                    :black))
