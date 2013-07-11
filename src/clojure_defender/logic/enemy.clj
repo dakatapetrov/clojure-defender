@@ -28,14 +28,12 @@
 
 (defn- lose-life
   []
-  (swap! gl/lives dec)
-  (println @gl/lives))
+  (swap! gl/lives dec))
 
-(defn- loot
+(defn- loot-enemy
   [enemy]
   (let [loot (:loot @enemy)]
-    (swap! gl/funds #(+ % loot)))
-  (println @gl/funds))
+    (swap! gl/funds #(+ % loot))))
 
 (defn step-enemy
   [enemy]
@@ -44,7 +42,7 @@
         [move-by-x move-by-y] (move-by dir-x dir-y speed)]
     (cond
       (dead? enemy) (do
-                      (loot enemy)
+                      (loot-enemy enemy)
                       (kill-enemy enemy))
       (on-defend-point? x y) (do
                                (kill-enemy enemy)

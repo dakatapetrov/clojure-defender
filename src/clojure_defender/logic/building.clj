@@ -12,8 +12,11 @@
 
 (defn- build
   [x y]
-  (swap! gl/buildings conj (conj @gl/current-building
-                                 {:x x :y y :ac (atom 0)})))
+  (let [cost (:cost @gl/current-building)]
+    (dosync
+      (swap! gl/funds #(- % cost))
+      (swap! gl/buildings conj (conj @gl/current-building
+                                     {:x x :y y :ac (atom 0)})))))
 (defn- on-cooldown?
   [building]
   (let [ac (:ac building)]
@@ -32,6 +35,18 @@
   [x y projectile enemy]
   (swap! gl/projectiles conj (ref (conj projectile
                                         {:x x :y y :enemy enemy}))))
+
+(defn- enough-funds?
+  []
+  (let [cost (:cost @gl/current-building)]
+    (<= cost @gl/funds)))
+
+(defn- return-funds
+  [building]
+  (let [cost (:cost building)
+        returned-funds (* 0.8 cost)]
+    (swap! gl/funds #(+ % returned-funds))))
+
 (defn shoot
   [building]
   (let [{:keys [x y projectiles fire-range]} building
@@ -50,6 +65,8 @@
        {:keys [x y]} on-build-area
        on-building (on-object cx cy @gl/buildings)]
    (if on-building
-     (destroy on-building)
-     (when on-build-area
+     (do
+       (return-funds on-building)
+       (destroy on-building))
+     (when (and on-build-area (enough-funds?))
        (build x y)))))

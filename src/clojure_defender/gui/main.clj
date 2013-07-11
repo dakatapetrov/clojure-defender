@@ -73,7 +73,9 @@
                                   (button :text "Fire" :class :fire-tower)
                                   (button :text "Frost" :class :frost-tower)
                                   (button :text "Arcane" :class :arcane-tower)
-                                  (button :text "Ultimate" :class :ultimate)])
+                                  (button :text "Ultimate" :class :ultimate)
+                                  (label :text (str "Lives " @gl/lives) :class :lives)
+                                  (label :text (str "Funds " @gl/funds) :class :funds)])
     :center (canvas :paint draw-world
                     :class :world
                     :background :black
@@ -81,7 +83,9 @@
 
 (defn redisplay [root]
   (dosync
-    (config! (select root [:.world]) :paint draw-world)))
+    (config! (select root [:.world]) :paint draw-world)
+    (config! (select root [:.lives]) :text (str "Lives " @gl/lives))
+    (config! (select root [:.funds]) :text (str "Funds " @gl/funds))))
 
 (defn create-gui
   []
