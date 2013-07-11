@@ -1,7 +1,6 @@
-(ns clojure-defender.logic.projectile)
-
-(require '[clojure-defender.globals :as gl])
-(use 'clojure-defender.physics.geometry)
+(ns clojure-defender.logic.projectile
+  (:use [clojure-defender.physics.geometry])
+  (:require [clojure-defender.globals :as gl]))
 
 (defn- move-by
   [x y speed]

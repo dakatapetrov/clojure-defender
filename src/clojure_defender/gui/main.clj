@@ -1,13 +1,11 @@
-(ns clojure-defender.gui.main)
-
-(use 'clojure.repl)
-(use '[seesaw core color graphics behave keymap])
-(require '[seesaw.mouse :as mouse])
-(require '[clojure-defender.globals :as gl])
-(require '[clojure-defender.data.buildings :as db])
-(use 'clojure-defender.levels.level-01)
-(use '[clojure-defender.logic.building :only [build-or-destroy]])
-(use 'clojure-defender.logic.main)
+(ns clojure-defender.gui.main
+  (:use [seesaw core color graphics behave]
+        [clojure-defender.levels.level-01]
+        [clojure-defender.logic.building :only [build-or-destroy]]
+        [clojure-defender.logic.main])
+  (:require [seesaw.mouse :as mouse]
+            [clojure-defender.globals :as gl]
+            [clojure-defender.data.buildings :as db]))
 
 (defn display [fr content]
   (config! fr :content content)

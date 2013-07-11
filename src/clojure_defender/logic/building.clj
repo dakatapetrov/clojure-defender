@@ -1,7 +1,6 @@
-(ns clojure-defender.logic.building)
-
-(require '[clojure-defender.globals :as gl])
-(use 'clojure-defender.physics.geometry)
+(ns clojure-defender.logic.building
+  (:use [clojure-defender.physics.geometry])
+  (:require [clojure-defender.globals :as gl]))
 
 (defn- enemies-in-range
   [x y r]

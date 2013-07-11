@@ -1,6 +1,6 @@
-(ns clojure-defender.physics.geometry)
-(use 'clojure.contrib.math)
-(require '[clojure-defender.globals :as gl])
+(ns clojure-defender.physics.geometry
+  (:use [clojure.contrib.math])
+  (:require [clojure-defender.globals :as gl]))
 
 (defn in-rect?
   [x1 y1 x2 y2 w2 h2]

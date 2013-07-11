@@ -1,12 +1,11 @@
-(ns clojure-defender.logic.main)
-
-(require '[clojure-defender.globals :as gl])
-(require '[clojure-defender.data.buildings :as db])
-(use 'clojure-defender.logic.spawner)
-(use 'clojure-defender.logic.enemy)
-(use 'clojure-defender.logic.building)
-(use 'clojure-defender.logic.projectile)
-(use 'clojure-defender.physics.geometry)
+(ns clojure-defender.logic.main
+  (:use [clojure-defender.logic spawner
+                                enemy
+                                building
+                                projectile]
+        [clojure-defender.physics.geometry])
+  (:require [clojure-defender.globals :as gl]
+            [clojure-defender.data.buildings :as db]))
 
 (defn step
   [col func]

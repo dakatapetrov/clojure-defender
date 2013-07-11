@@ -1,6 +1,5 @@
-(ns clojure-defender.physics.enemy)
-
-(require '[clojure-defender.globals :as gl])
+(ns clojure-defender.physics.enemy
+  (:require [clojure-defender.globals :as gl]))
 
 (defn kill-enemy
   [enemy]

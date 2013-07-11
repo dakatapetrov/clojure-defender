@@ -1,7 +1,6 @@
-(ns clojure-defender.levels.level-01)
-
-(require '[clojure-defender.globals :as gl])
-(require '[clojure-defender.data.enemies :as ed])
+(ns clojure-defender.levels.level-01
+  (:require [clojure-defender.globals :as gl]
+            [clojure-defender.data.enemies :as ed]))
 
 (def lives 20)
 

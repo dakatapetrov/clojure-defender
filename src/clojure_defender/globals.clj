@@ -1,8 +1,7 @@
-(ns clojure-defender.globals)
-
-(use 'clojure.repl)
-(use 'seesaw.core)
-(require '[clojure-defender.data.buildings :as db])
+(ns clojure-defender.globals
+  (:use
+    [seesaw.core])
+  (:require [clojure-defender.data.buildings :as db]))
 
 (def paths (atom []))
 (def defend-points (atom []))

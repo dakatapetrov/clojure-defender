@@ -1,6 +1,5 @@
-(ns clojure-defender.data.buildings)
-
-(require '[clojure-defender.data.projectiles :as pj])
+(ns clojure-defender.data.buildings
+  (:require [clojure-defender.data.projectiles :as pj]))
 
 (defn define-building
   [cost fire-range cooldown projectiles color]

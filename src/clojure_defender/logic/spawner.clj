@@ -1,6 +1,5 @@
-(ns clojure-defender.logic.spawner)
-
-(require '[clojure-defender.globals :as gl])
+(ns clojure-defender.logic.spawner
+  (:require [clojure-defender.globals :as gl]))
 
 (defn- on-cooldown?
   [spawner]

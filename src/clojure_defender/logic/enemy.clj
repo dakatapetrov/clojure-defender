@@ -1,9 +1,6 @@
-(ns clojure-defender.logic.enemy)
-
-(use 'clojure-defender.physics.enemy)
-
-(require '[clojure-defender.globals :as gl])
-(use 'clojure-defender.physics.geometry)
+(ns clojure-defender.logic.enemy
+  (:use [clojure-defender.physics enemy geometry])
+  (:require [clojure-defender.globals :as gl]))
 
 (defn- path-direction
   [x y]
