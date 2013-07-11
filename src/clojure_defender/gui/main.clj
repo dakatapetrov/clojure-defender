@@ -118,8 +118,8 @@
   []
   (loop [painter (atom (future (true)))]
     (when @gl/playing?
-      (play)
-      (when (realized? @painter)
-        (reset! painter (future (redisplay gl/main-frame)))))
+      (play))
+    (when (realized? @painter)
+      (reset! painter (future (redisplay gl/main-frame))))
     (Thread/sleep 3)
     (recur painter)))
