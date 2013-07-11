@@ -27,4 +27,5 @@
 (def fireball (define-projectile 0.6 40 :yellow))
 (def frostball (define-projectile 0.55 45 :aqua))
 (def arcanemissle (define-projectile 0.65 35 :white))
-(def slow-frostball (modify-projectile frostball {:damage 10 :debuff slow :color :blue}))
+(def slow-frostball (modify-projectile frostball
+                                       {:damage 10 :debuff slow :color :blue}))

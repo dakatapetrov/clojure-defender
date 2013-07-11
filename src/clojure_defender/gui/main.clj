@@ -66,16 +66,21 @@
   (draw-enemies g)
   (draw-projectiles g))
 
+(def menu-items
+  [(button :text "Play" :class :play-button)
+   (button :text "Pause" :class :pause-button)
+   (button :text "Fire" :class :fire-tower)
+   (button :text "Frost" :class :frost-tower)
+   (button :text "Arcane" :class :arcane-tower)
+   (button :text "Ultimate" :class :ultimate)
+   (label :text (format "Lives: %d" @gl/lives) :class :lives :background :green)
+   (label :text (format "Funds: %.0f" @gl/funds) :class :funds :background :green)])
+
+
 (defn make-panel []
   (border-panel
-    :west (vertical-panel :items [(button :text "Play" :class :play-button)
-                                  (button :text "Pause" :class :pause-button)
-                                  (button :text "Fire" :class :fire-tower)
-                                  (button :text "Frost" :class :frost-tower)
-                                  (button :text "Arcane" :class :arcane-tower)
-                                  (button :text "Ultimate" :class :ultimate)
-                                  (label :text (str "Lives " @gl/lives) :class :lives)
-                                  (label :text (str "Funds " @gl/funds) :class :funds)])
+    :west (vertical-panel :items menu-items
+                          :background :red)
     :center (canvas :paint draw-world
                     :class :world
                     :background :black
@@ -84,13 +89,11 @@
 (defn redisplay [root]
   (dosync
     (config! (select root [:.world]) :paint draw-world)
-    (config! (select root [:.lives]) :text (str "Lives " @gl/lives))
-    (config! (select root [:.funds]) :text (str "Funds " @gl/funds))))
+    (config! (select root [:.lives]) :text (format "Lives: %d" @gl/lives))
+    (config! (select root [:.funds]) :text (format "Funds: %.0f" @gl/funds))))
 
-(defn create-gui
+(defn listeners
   []
-  (-> gl/main-frame show!)
-  (display gl/main-frame (make-panel))
   (listen (select gl/main-frame [:.play-button])
           :action
           (fn [e] (reset! gl/playing? true)))
@@ -114,12 +117,24 @@
           (fn [e] (let [[x y] (mouse/location e)]
                     (build-or-destroy x y)))))
 
+(defn create-gui
+  []
+  (-> gl/main-frame show!)
+  (display gl/main-frame (make-panel))
+  (listeners))
+
+(defn redraw
+  []
+  (loop []
+    (redisplay gl/main-frame)
+    (Thread/sleep 6)
+    (recur)))
+
 (defn run
   []
-  (loop [painter (atom (future (true)))]
+  (future (redraw))
+  (loop []
     (when @gl/playing?
       (play))
-    (when (realized? @painter)
-      (reset! painter (future (redisplay gl/main-frame))))
     (Thread/sleep 3)
-    (recur painter)))
+    (recur)))

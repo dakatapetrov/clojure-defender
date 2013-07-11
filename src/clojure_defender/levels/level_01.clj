@@ -5,7 +5,7 @@
 
 (def lives 20)
 
-(def funds 200)
+(def funds 200.0)
 
 (def world {:x 0 :y 0 :width 980 :height 768 :color "#3eb677"})
 

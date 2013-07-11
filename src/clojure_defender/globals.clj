@@ -24,4 +24,4 @@
 (def current-building (atom db/fire-tower))
 (def playing? (atom false))
 (def lives (atom 0))
-(def funds (atom 0))
+(def funds (atom 0.0))
