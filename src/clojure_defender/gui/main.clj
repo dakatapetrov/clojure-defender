@@ -6,6 +6,7 @@
 (require '[clojure-defender.globals :as gl])
 (require '[clojure-defender.data.buildings :as db])
 (use 'clojure-defender.levels.level-01)
+(use '[clojure-defender.logic.building :only [build-or-destroy]])
 (use 'clojure-defender.logic.main)
 
 (defn display [fr content]
@@ -107,8 +108,7 @@
   (listen (select gl/main-frame [:.world])
           :mouse-clicked
           (fn [e] (let [[x y] (mouse/location e)]
-                    (dosync
-                      (alter gl/click-location conj {:x x :y y}))))))
+                    (build-or-destroy x y)))))
 
 (defn run
   []
