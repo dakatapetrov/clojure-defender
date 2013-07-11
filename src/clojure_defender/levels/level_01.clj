@@ -3,6 +3,10 @@
 (require '[clojure-defender.globals :as gl])
 (require '[clojure-defender.data.enemies :as ed])
 
+(def lives 20)
+
+(def funds 100)
+
 (def world {:x 0 :y 0 :width 980 :height 768 :color "#3eb677"})
 
 (def paths
@@ -51,6 +55,14 @@
   (doseq [spawner spawners]
     (swap! gl/spawners conj spawner)))
 
+(defn load-lives
+  []
+  (reset! gl/lives lives))
+
+(defn load-funds
+  []
+  (reset! gl/funds funds))
+
 (defn load-buildings [])
 (defn load-enemies [])
 (defn load-projectiles [])
@@ -63,4 +75,6 @@
   (load-spawners)
   (load-buildings)
   (load-enemies)
-  (load-projectiles))
+  (load-projectiles)
+  (load-lives)
+  (load-funds))

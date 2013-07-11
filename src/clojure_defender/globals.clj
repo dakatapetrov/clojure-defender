@@ -21,6 +21,7 @@
 (def main-frame (frame :title "Clojure Defender"
                        :on-close :exit
                        :size [window-width :by window-height]))
-(def click-location (ref {}))
 (def current-building (atom db/fire-tower))
 (def playing? (atom false))
+(def lives (atom 0))
+(def funds (atom 0))

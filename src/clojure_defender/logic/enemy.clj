@@ -26,11 +26,27 @@
   (let [hp (:hp @enemy)]
     (<= hp 0)))
 
+(defn- lose-life
+  []
+  (swap! gl/lives dec)
+  (println @gl/lives))
+
+(defn- loot
+  [enemy]
+  (let [loot (:loot @enemy)]
+    (swap! gl/funds #(+ % loot)))
+  (println @gl/funds))
+
 (defn step-enemy
   [enemy]
   (let [{:keys [speed x y]} @enemy
         [dir-x dir-y] (path-direction x y)
         [move-by-x move-by-y] (move-by dir-x dir-y speed)]
-    (if (or (dead? enemy) (on-defend-point? x y))
-      (kill-enemy enemy)
-      (move-enemy enemy move-by-x move-by-y))))
+    (cond
+      (dead? enemy) (do
+                      (loot enemy)
+                      (kill-enemy enemy))
+      (on-defend-point? x y) (do
+                               (kill-enemy enemy)
+                               (lose-life))
+      :else (move-enemy enemy move-by-x move-by-y))))
