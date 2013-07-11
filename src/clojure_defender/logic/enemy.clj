@@ -35,11 +35,23 @@
   (let [loot (:loot @enemy)]
     (swap! gl/funds #(+ % loot))))
 
+(defn- process-debuff
+  [debuff enemy]
+  (let [{:keys [clear duration]} @debuff]
+    (if (<= duration 0)
+      (dosync
+        (clear enemy)
+        (alter enemy dissoc :debuff))
+      (dosync
+        (alter debuff update-in [:duration] dec)))))
+
 (defn step-enemy
   [enemy]
-  (let [{:keys [speed x y]} @enemy
+  (let [{:keys [speed x y debuff]} @enemy
         [dir-x dir-y] (path-direction x y)
         [move-by-x move-by-y] (move-by dir-x dir-y speed)]
+    (when debuff
+      (process-debuff debuff enemy))
     (cond
       (dead? enemy) (do
                       (loot-enemy enemy)

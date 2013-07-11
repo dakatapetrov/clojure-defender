@@ -22,9 +22,18 @@
       (alter projectile update-in [:x] #(+ % (* speed dirx)))
       (alter projectile update-in [:y] #(+ % (* speed diry))))))
 
+(defn- apply-debuff
+  [debuff enemy]
+  (let [{:keys [put clear duration]} debuff
+        on-debuff? (:debuff @enemy)]
+    (when-not on-debuff?
+      (dosync
+        (alter enemy conj {:debuff (ref debuff)})
+        (put enemy)))))
+
 (defn- collision
   [projectile]
-  (let [{:keys [x y damage enemy]} @projectile
+  (let [{:keys [x y damage debuff enemy]} @projectile
         ex (:x @enemy)
         ey (:y @enemy)
         [cx cy] (rect-center ex ey gl/enemy-size gl/enemy-size)
@@ -32,7 +41,9 @@
     (when (sphere-colision? x y gl/projectile-size cx cy hs)
       (dosync
         (alter enemy update-in [:hp] #(- % damage))
-        (swap! gl/projectiles disj projectile)))))
+        (swap! gl/projectiles disj projectile)
+        (when debuff
+          (apply-debuff debuff enemy))))))
 
 (defn step-projectile
   [projectile]
