@@ -16,13 +16,15 @@
   [projectile attributes]
   (conj projectile attributes))
 
-(def slow (define-debuff (fn [enemy] (dosync
-                                       (alter enemy update-in [:speed] #(* % 0.5))))
-                         (fn [enemy] (dosync
-                                       (alter enemy update-in [:speed] #(* % 2))))
+(def slow (define-debuff (fn [enemy]
+                           (dosync
+                             (alter enemy update-in [:speed] #(* % 0.5))))
+                         (fn [enemy]
+                           (dosync
+                             (alter enemy update-in [:speed] #(* % 2))))
                          2000))
 
-(def fireball (define-projectile 0.3 40 :yellow))
-(def frostball (define-projectile 0.25 45 :aqua))
-(def arcanemissle (define-projectile 0.35 35 :white))
+(def fireball (define-projectile 0.6 40 :yellow))
+(def frostball (define-projectile 0.55 45 :aqua))
+(def arcanemissle (define-projectile 0.65 35 :white))
 (def slow-frostball (modify-projectile frostball {:damage 10 :debuff slow :color :blue}))
