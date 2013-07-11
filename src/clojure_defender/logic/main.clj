@@ -28,5 +28,4 @@
   (step gl/spawners step-spawner)
   (step gl/enemies step-enemy)
   (step gl/buildings shoot)
-  (move-projectiles)
-  (collisions))
+  (step gl/projectiles step-projectile))
