@@ -20,9 +20,15 @@
 (def defend-points [{:x 720 :y 490 :capacity 50 :color :red}])
 
 (def build-areas
-  (for [x (range 0 700 90)
-        y [70 130]]
-    {:x x :y y :color "#f4dd65"}))
+  (concat (for [x (range 0 700 90)
+                y [70 130]]
+            {:x x :y y :color "#f4dd65"})
+          (for [x (range 0 700 90)
+                y [460 520]]
+            {:x x :y y :color "#f4dd65"})
+          (for [x [690 750]
+                y (range 130 461 90)]
+            {:x x :y y :color "#f4dd65"})))
 
 (def spawners
   [{:x 0 :y 110 :enemies [ed/assassin ed/zombie ed/orc]
