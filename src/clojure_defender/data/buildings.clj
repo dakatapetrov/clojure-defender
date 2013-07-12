@@ -10,15 +10,15 @@
   [building attributes]
   (conj building attributes))
 
-(def fire-tower (define-building 100 70 300 [pj/fireball] :orange))
-(def frost-tower (define-building 110 70 350
+(def fire-tower (define-building 100 70 150 [pj/fireball] :orange))
+(def frost-tower (define-building 110 70 175
                                   [pj/frostball
                                    pj/frostball
                                    pj/frostball
                                    pj/slow-frostball]
                                   :blue))
-(def arcane-tower (define-building 90 65 250 [pj/arcanemissle] :gray))
-(def ultimate-tower (define-building 100 70 280
+(def arcane-tower (define-building 90 65 125 [pj/arcanemissle] :gray))
+(def ultimate-tower (define-building 100 70 140
                                      [pj/fireball
                                       pj/frostball
                                       pj/arcanemissle]

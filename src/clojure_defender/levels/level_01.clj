@@ -32,9 +32,9 @@
 
 (def spawners
   [{:x 0 :y 110 :enemies [ed/assassin ed/zombie ed/orc]
-    :cooldown 600 :ac (atom 0)}
+    :cooldown 300 :ac (atom 0)}
    {:x 0 :y 500 :enemies [ed/assassin ed/zombie]
-    :cooldown 2000 :ac (atom 0)}])
+    :cooldown 1000 :ac (atom 0)}])
 
 (def buildings)
 (def enemies)
