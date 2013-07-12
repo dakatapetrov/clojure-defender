@@ -1,10 +1,8 @@
 (ns clojure-defender.core
   (:gen-class)
-  (:use [clojure-defender.gui.main])
+  (:use [clojure-defender.logic.main])
   (:require [clojure-defender.globals :as gl]))
 
 (defn -main
   [& args]
-  (create-gui)
-  (redisplay gl/main-frame)
-  (run))
+  (play))

@@ -1,7 +1,6 @@
 (ns clojure-defender.gui.main
   (:use [seesaw core color graphics behave]
-        [clojure-defender.logic.building :only [build-or-destroy]]
-        [clojure-defender.logic.main])
+        [clojure-defender.logic.building :only [build-or-destroy]])
   (:require [seesaw.mouse :as mouse]
             [clojure-defender.globals :as gl]
             [clojure-defender.data.buildings :as db]))
@@ -163,8 +162,3 @@
     (redisplay gl/main-frame)
     (Thread/sleep 12)
     (recur)))
-
-(defn run
-  []
-  (future (redraw))
-  (play))
