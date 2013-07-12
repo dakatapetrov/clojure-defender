@@ -2,7 +2,9 @@
   (:use [clojure-defender.logic spawner
                                 enemy
                                 building
-                                projectile]
+                                projectile
+                                level]
+        [clojure-defender.levels.level-01]
         [clojure-defender.physics.geometry])
   (:require [clojure-defender.globals :as gl]
             [clojure-defender.data.buildings :as db]))
@@ -22,9 +24,20 @@
 
 (defn play
   []
-  (cooldown-timer @gl/spawners)
-  (cooldown-timer @gl/buildings)
-  (step gl/spawners step-spawner)
-  (step gl/enemies step-enemy)
-  (step gl/buildings shoot)
-  (step gl/projectiles step-projectile))
+  (load-level world
+              paths
+              defend-points
+              build-areas
+              spawners
+              lives
+              funds)
+  (loop []
+    (when @gl/playing?
+      (cooldown-timer @gl/spawners)
+      (cooldown-timer @gl/buildings)
+      (step gl/spawners step-spawner)
+      (step gl/enemies step-enemy)
+      (step gl/buildings shoot)
+      (step gl/projectiles step-projectile))
+    (Thread/sleep 6)
+    (recur)))

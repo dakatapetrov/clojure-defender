@@ -1,6 +1,5 @@
 (ns clojure-defender.gui.main
   (:use [seesaw core color graphics behave]
-        [clojure-defender.levels.level-01]
         [clojure-defender.logic.building :only [build-or-destroy]]
         [clojure-defender.logic.main])
   (:require [seesaw.mouse :as mouse]
@@ -31,7 +30,7 @@
 
 (defn draw-play-area
   [g]
-  (let [{:keys [x y width height color]} world]
+  (let [{:keys [x y width height color]} @gl/world]
   (draw g (rect x y width height) (style :background color))))
 
 
@@ -168,8 +167,4 @@
 (defn run
   []
   (future (redraw))
-  (loop []
-    (when @gl/playing?
-      (play))
-    (Thread/sleep 6)
-    (recur)))
+  (play))
