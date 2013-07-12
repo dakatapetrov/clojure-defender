@@ -26,35 +26,35 @@
   [x y enemies cooldown]
   {:x x :y y :enemies enemies :cooldown cooldown :ac (atom 0)})
 
-(defn load-world
+(defn- load-world
   [world]
   (swap! gl/world conj world))
 
-(defn load-paths
+(defn- load-paths
   [paths]
   (doseq [path paths]
     (swap! gl/paths conj path)))
 
-(defn load-defend-points
+(defn- load-defend-points
   [defend-points]
   (doseq [protect-point defend-points]
     (swap! gl/defend-points conj protect-point)))
 
-(defn load-build-areas
+(defn- load-build-areas
   [build-areas]
   (doseq [build-area build-areas]
     (swap! gl/build-areas conj build-area)))
 
-(defn load-spawners
+(defn- load-spawners
   [spawners]
   (doseq [spawner spawners]
     (swap! gl/spawners conj spawner)))
 
-(defn load-lives
+(defn- load-lives
   [lives]
   (reset! gl/lives lives))
 
-(defn load-funds
+(defn- load-funds
   [funds]
   (reset! gl/funds funds))
 
