@@ -52,7 +52,8 @@
         [cx cy] (rect-center x y gl/building-size gl/building-size)
         projectile (rand-nth projectiles)
         enemies (enemies-in-range cx cy fire-range)
-        enemy (first enemies)]
+        sort-by-hp (sort-by #(:hp @%) enemies)
+        enemy (first sort-by-hp)]
     (when (and enemy (not (on-cooldown? building)))
       (dosync
         (spawn-projectile cx cy projectile enemy)
