@@ -7,6 +7,24 @@
             [clojure-defender.globals :as gl]
             [clojure-defender.data.buildings :as db]))
 
+(def health-bar-offset [3 6])
+(def health-bar-size (+ gl/enemy-size
+                        (* (first health-bar-offset) 2)))
+
+(defn draw-health-bar
+  [g x y hp maxhp]
+  (let [[ofs-x ofs-y] health-bar-offset
+        pos-y (- y ofs-y)
+        hp-percentage (/ hp maxhp)
+        hp-on-size (* health-bar-size hp-percentage)
+        hp-off-size (- health-bar-size hp-on-size)]
+    (draw g
+          (rect (- x ofs-x) pos-y hp-on-size (/ ofs-y 2))
+          (style :background :green))
+    (draw g
+          (rect (+ x (- hp-on-size ofs-x)) pos-y hp-off-size (/ ofs-y 2))
+          (style :background :red))))
+
 (defn display [fr content]
   (config! fr :content content)
   content)
@@ -38,8 +56,9 @@
 (defn draw-enemies
   [g]
   (doseq [enemy @gl/enemies]
-    (let [{:keys [x y color]} @enemy]
-      (draw g (rect x y gl/enemy-size) (style :background color)))))
+    (let [{:keys [x y color hp maxhp]} @enemy]
+      (draw g (rect x y gl/enemy-size) (style :background color))
+      (draw-health-bar g x y hp maxhp))))
 
 (defn draw-buildings
   [g]

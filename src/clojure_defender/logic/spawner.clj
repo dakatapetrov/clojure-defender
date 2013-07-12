@@ -14,10 +14,11 @@
 (defn- spawn
   [spawner]
   (let [{:keys [x y enemies]} spawner
-        enemy (rand-nth enemies)]
+        enemy (rand-nth enemies)
+        maxhp (:hp enemy)]
   (swap! gl/enemies
            conj
-           (ref (conj enemy {:x x :y y})))))
+           (ref (conj enemy {:x x :y y :maxhp maxhp})))))
 
 (defn step-spawner
   [spawner]
