@@ -20,10 +20,10 @@
         hp-off-size (- health-bar-size hp-on-size)]
     (draw g
           (rect (- x ofs-x) pos-y hp-on-size (/ ofs-y 2))
-          (style :background :green))
+          (style :background :green :stroke 1 :foreground :black))
     (draw g
           (rect (+ x (- hp-on-size ofs-x)) pos-y hp-off-size (/ ofs-y 2))
-          (style :background :red))))
+          (style :background :red :stroke 1 :foreground :black))))
 
 (defn display [fr content]
   (config! fr :content content)
@@ -39,38 +39,50 @@
   [g]
   (doseq [path @gl/paths]
     (let [{:keys [x y color]} path]
-      (draw g (rect x y gl/path-size) (style :background color)))))
+      (draw g
+            (rect x y gl/path-size)
+            (style :background color)))))
 
 (defn draw-defend-points
   [g]
   (doseq [protect-point @gl/defend-points]
     (let [{:keys [x y color]}  protect-point]
-      (draw g (rect x y gl/path-size) (style :background :red)))))
+      (draw g
+            (rect x y gl/path-size)
+            (style :background :red :stroke 1 :foreground :black)))))
 
 (defn draw-build-areas
   [g]
   (doseq [build-area @gl/build-areas]
     (let [{:keys [x y color]}  build-area]
-      (draw g (rect x y gl/building-size) (style :background color)))))
+      (draw g
+            (rect x y gl/building-size)
+            (style :background color :stroke 1 :foreground :black)))))
 
 (defn draw-enemies
   [g]
   (doseq [enemy @gl/enemies]
     (let [{:keys [x y color hp maxhp]} @enemy]
-      (draw g (rect x y gl/enemy-size) (style :background color))
+      (draw g
+            (rect x y gl/enemy-size)
+            (style :background color :stroke 1 :foreground :black))
       (draw-health-bar g x y hp maxhp))))
 
 (defn draw-buildings
   [g]
   (doseq [building @gl/buildings]
     (let [{:keys [x y color]} building]
-      (draw g (rect x y gl/building-size) (style :background color)))))
+      (draw g
+            (rect x y gl/building-size)
+            (style :background color :stroke 1 :foreground :black)))))
 
 (defn draw-projectiles
   [g]
   (doseq [projectile @gl/projectiles]
     (let [{:keys [x y color]} @projectile]
-      (draw g (circle x y gl/projectile-size) (style :background color)))))
+      (draw g
+            (circle x y gl/projectile-size)
+            (style :background color :stroke 1 :foreground :black)))))
 
 
 (defn draw-world
@@ -90,14 +102,18 @@
    (button :text "Frost" :class :frost-tower)
    (button :text "Arcane" :class :arcane-tower)
    (button :text "Ultimate" :class :ultimate)
-   (label :text (format "Lives: %d" @gl/lives) :class :lives :background :green)
-   (label :text (format "Funds: %.0f" @gl/funds) :class :funds :background :green)])
+   (label :text (format "Lives: %d" @gl/lives)
+          :class :lives
+          :background :green)
+   (label :text (format "Funds: %.0f" @gl/funds)
+          :class :funds
+          :background :green)])
 
 
 (defn make-panel []
   (border-panel
     :west (vertical-panel :items menu-items
-                          :background :red)
+                          :background :green)
     :center (canvas :paint draw-world
                     :class :world
                     :background :black
@@ -106,8 +122,10 @@
 (defn redisplay [root]
   (dosync
     (config! (select root [:.world]) :paint draw-world)
-    (config! (select root [:.lives]) :text (format "Lives: %d" @gl/lives))
-    (config! (select root [:.funds]) :text (format "Funds: %.0f" @gl/funds))))
+    (config! (select root [:.lives])
+             :text (format "Lives: %d" @gl/lives))
+    (config! (select root [:.funds])
+             :text (format "Funds: %.0f" @gl/funds))))
 
 (defn listeners
   []
@@ -144,7 +162,7 @@
   []
   (loop []
     (redisplay gl/main-frame)
-    (Thread/sleep 6)
+    (Thread/sleep 12)
     (recur)))
 
 (defn run
@@ -153,5 +171,5 @@
   (loop []
     (when @gl/playing?
       (play))
-    (Thread/sleep 3)
+    (Thread/sleep 6)
     (recur)))
