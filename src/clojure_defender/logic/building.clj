@@ -46,14 +46,18 @@
         returned-funds (* 0.8 cost)]
     (swap! gl/funds #(+ % returned-funds))))
 
+(defn- select-target
+  [enemies]
+  (let [sort-by-hp (sort-by #(:hp @%) enemies)]
+    (first sort-by-hp)))
+
 (defn shoot
   [building]
   (let [{:keys [x y projectiles fire-range]} building
         [cx cy] (rect-center x y gl/building-size gl/building-size)
         projectile (rand-nth projectiles)
         enemies (enemies-in-range cx cy fire-range)
-        sort-by-hp (sort-by #(:hp @%) enemies)
-        enemy (first sort-by-hp)]
+        enemy (select-target enemies)]
     (when (and enemy (not (on-cooldown? building)))
       (dosync
         (spawn-projectile cx cy projectile enemy)
