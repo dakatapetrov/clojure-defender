@@ -58,12 +58,24 @@
   [funds]
   (reset! gl/funds funds))
 
+(defn- load-time-limit
+  [time-limit]
+  (reset! gl/timer (* 166 time-limit)))
+
 (defn load-level
-  [world paths defend-points build-areas spawners lives funds]
+  [world
+   paths
+   defend-points
+   build-areas
+   spawners
+   lives
+   funds
+   time-limit]
   (load-world world)
   (load-paths paths)
   (load-defend-points defend-points)
   (load-build-areas build-areas)
   (load-spawners spawners)
   (load-lives lives)
-  (load-funds funds))
+  (load-funds funds)
+  (load-time-limit time-limit))

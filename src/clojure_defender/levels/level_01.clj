@@ -7,6 +7,8 @@
 
 (def funds 200.0)
 
+(def time-limit 150)
+
 (def world (define-world 980 768 "#3eb677"))
 
 (def path1

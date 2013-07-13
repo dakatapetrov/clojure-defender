@@ -55,7 +55,8 @@
               build-areas
               spawners
               lives
-              funds))
+              funds
+              time-limit))
 
 (defn play
   []

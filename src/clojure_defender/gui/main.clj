@@ -125,17 +125,20 @@
                     :background :black
                     :cursor :hand)))
 
-(defn redisplay [root]
-  (dosync
-    (config! (select root [:.world]) :paint draw-world)
-    (config! (select root [:.timer])
-             :text (format "Time left: %02d m %02d s "
-                           (quot  @gl/timer (* 166 60))
-                           (rem (quot @gl/timer 166) 60)))
-    (config! (select root [:.lives])
-             :text (format "Lives: %d" @gl/lives))
-    (config! (select root [:.funds])
-             :text (format "Funds: %.0f" @gl/funds))))
+(defn redisplay
+  [root]
+  (let [minutes (quot @gl/timer (* 166 60))
+        seconds (rem (quot @gl/timer 166) 60)]
+    (dosync
+      (config! (select root [:.world]) :paint draw-world)
+      (config! (select root [:.timer])
+               :text (format "Time left: %02d m %02d s "
+                             minutes
+                             seconds))
+      (config! (select root [:.lives])
+               :text (format "Lives: %d" @gl/lives))
+      (config! (select root [:.funds])
+               :text (format "Funds: %.0f" @gl/funds)))))
 
 (defn listeners
   []

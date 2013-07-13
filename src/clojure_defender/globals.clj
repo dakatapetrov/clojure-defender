@@ -24,4 +24,4 @@
 (def lives (atom 0))
 (def funds (atom 0.0))
 (def world (atom {:x 0 :y 0 :width 0 :height 0 :color :green}))
-(def timer (atom (* 166 150)))
+(def timer (atom 0))
