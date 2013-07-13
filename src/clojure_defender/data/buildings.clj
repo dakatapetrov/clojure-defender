@@ -16,7 +16,7 @@
                                    pj/frostball
                                    pj/frostball
                                    pj/slow-frostball]
-                                  :blue))
+                                  "#4f81bd"))
 (def arcane-tower (define-building 90 65 125 [pj/arcanemissle] :gray))
 (def ultimate-tower (define-building 100 70 140
                                      [pj/fireball
