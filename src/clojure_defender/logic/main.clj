@@ -28,6 +28,10 @@
   []
   (<= @gl/lives 0))
 
+(defn won?
+  []
+  (<= @gl/timer 0))
+
 (defn reset-world
   []
   (dosync
@@ -40,6 +44,7 @@
     (reset! gl/projectiles #{})
     (reset! gl/lives 0)
     (reset! gl/funds 0.0)
+    (reset! gl/timer (* 166 150))
     (reset! gl/world {:x 0 :y 0 :width 0 :height 0 :color :green})))
 
 (defn load-level-01
@@ -58,12 +63,18 @@
   (create-gui)
   (future (redraw))
   (loop []
+    (when (won?)
+      (reset! gl/playing? false)
+      (alert "You win!")
+      (reset-world)
+      (load-level-01))
     (when (lost?)
       (reset! gl/playing? false)
       (alert "Losers gonna lose!")
       (reset-world)
       (load-level-01))
     (when @gl/playing?
+      (swap! gl/timer dec)
       (cooldown-timer @gl/spawners)
       (cooldown-timer @gl/buildings)
       (step gl/spawners step-spawner)

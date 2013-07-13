@@ -100,11 +100,19 @@
    (button :text "Frost" :class :frost-tower)
    (button :text "Arcane" :class :arcane-tower)
    (button :text "Ultimate" :class :ultimate)
+   (label :text (format "Time left: %02d m %02d s "
+                        (quot  @gl/timer 166)
+                        (rem (quot @gl/timer 166) 60))
+          :class :timer
+          :foreground :white
+          :background :green)
    (label :text (format "Lives: %d" @gl/lives)
           :class :lives
+          :foreground :white
           :background :green)
    (label :text (format "Funds: %.0f" @gl/funds)
           :class :funds
+          :foreground :white
           :background :green)])
 
 
@@ -120,6 +128,10 @@
 (defn redisplay [root]
   (dosync
     (config! (select root [:.world]) :paint draw-world)
+    (config! (select root [:.timer])
+             :text (format "Time left: %02d m %02d s "
+                           (quot  @gl/timer (* 166 60))
+                           (rem (quot @gl/timer 166) 60)))
     (config! (select root [:.lives])
              :text (format "Lives: %d" @gl/lives))
     (config! (select root [:.funds])
